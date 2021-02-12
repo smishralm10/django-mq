@@ -43,13 +43,19 @@ def result(request, amount):
 @require_GET
 def downloads(request):
     try:
-        async_result = AsyncResults.objects.all().order_by('-created_on')[0]
-        data = json.loads(async_result.result)
-        created_on = async_result.created_on.minute
-        time = datetime.now().minute - created_on
+        async_result = AsyncResults.objects.all().order_by('-created_on')
+        
+        time = ''
+        created_on = async_result.created_on
+        now = datetime.now()
+ 
+        if now.hour - created_on.hour != 0:
+            time = str(now.hour - creted_on.hour) + ' ' + 'hours ago'
+        else:
+            time = str(now.minute - created_on.minute) + ' ' + 'minutes ago'
+
         context = {
-            'filename': data.get('filename'),
-            'location': data.get('location'),
+            'tasks':  async_result
             'time': time
         }
         return render(request, 'downloads.html', context)

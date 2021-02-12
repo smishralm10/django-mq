@@ -1,8 +1,10 @@
 {% extends 'index.html' %}
 {% block content %}
-    <div>
-        <a href="{{ location }}">{{ filename }}</a>
-        <span style="font-size: small;">{{ time }} minutes ago</span>
-    </div>
+    {% for task in tasks %}
+        <div>
+            <a href="{{ task.location }}">{{ task.filename }}</a>
+            <span style="font-size: small;">{{ task.time }}</span>
+        </div>
+    {% endfor %}
 
 {% endblock %}

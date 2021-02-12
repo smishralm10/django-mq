@@ -1,6 +1,5 @@
 import pandas as pd
 import os
-import json
 import sys
 import random
 from mq.celery import app
@@ -19,21 +18,12 @@ def createCSV(self, amount):
     file_path = os.path.join(settings.MEDIA_ROOT, filename)
     employees_df.to_csv(file_path, index=False)
     try:
-        result = {
-            'status_code': 200,
-            'location': file_path,
-            'filename': filename
-        }
-        json_result = json.dumps(result)
-        async_result = AsyncResults.objects.create(task_id=self.request.id, result=json_result)
+        result = 200
+        async_result = AsyncResults.objects.create(task_id=self.request.id, result=result, location=file_path, filename=filename)
         async_result.save()
     except:
-        result = {
-            "status_code": 500, 
-            "error_message": str(sys.exc_info()[0])
-        }
-        json_result = json.dumps(result)
-        async_result = AsyncResults.objects.create(task_id=task_id, result=json_result)
+        result = str(sys.exc_info()[0])
+        async_result = AsyncResults.objects.create(task_id=task_id, result=result, location='None', filename='None')
         async_result.save()
 
 
