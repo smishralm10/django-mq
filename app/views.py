@@ -55,7 +55,7 @@ def downloads(request):
             time = str(now.minute - created_on.minute) + ' ' + 'minutes ago'
 
         context = {
-            'tasks':  async_result
+            'tasks':  async_result,
             'time': time
         }
         return render(request, 'downloads.html', context)
