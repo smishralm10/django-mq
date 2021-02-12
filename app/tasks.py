@@ -23,7 +23,7 @@ def createCSV(self, amount):
         async_result.save()
     except:
         result = str(sys.exc_info()[0])
-        async_result = AsyncResults.objects.create(task_id=task_id, result=result, location='None', filename='None')
+        async_result = AsyncResults.objects.create(task_id=task_id, result=result)
         async_result.save()
 
 
