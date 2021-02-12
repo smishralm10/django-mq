@@ -42,13 +42,12 @@ def result(request, amount):
 
 @require_GET
 def downloads(request):
-    try:
-        async_result = AsyncResults.objects.all().order_by('-created_on')
-        
+    async_result = AsyncResults.objects.all().order_by('-created_on')
+    if len(async_result) > 0:
         time = ''
         created_on = async_result.created_on
         now = datetime.now()
- 
+
         if now.hour - created_on.hour != 0:
             time = str(now.hour - creted_on.hour) + ' ' + 'hours ago'
         else:
@@ -60,8 +59,8 @@ def downloads(request):
         }
         return render(request, 'downloads.html', context)
 
-    except AsyncResults.DoesNotExist:
-        raise Http404
+    else:
+        return render(request, 'message.html', context={'message': 'You either have no files to downlaod or your file is not processed yet. Come again later'})
 
 @require_GET
 def file(request, filename):
