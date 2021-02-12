@@ -49,7 +49,7 @@ def downloads(request):
         now = datetime.now()
 
         if now.hour - created_on.hour != 0:
-            time = str(now.hour - creted_on.hour) + ' ' + 'hours ago'
+            time = str(now.hour - created_on.hour) + ' ' + 'hours ago'
         else:
             time = str(now.minute - created_on.minute) + ' ' + 'minutes ago'
 
