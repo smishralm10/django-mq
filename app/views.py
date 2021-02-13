@@ -44,18 +44,9 @@ def result(request, amount):
 def downloads(request):
     async_result = AsyncResults.objects.all().order_by('-created_on')
     if len(async_result) > 0:
-        time = ''
-        created_on = async_result.created_on
-        now = datetime.now()
-
-        if now.hour - created_on.hour != 0:
-            time = str(now.hour - created_on.hour) + ' ' + 'hours ago'
-        else:
-            time = str(now.minute - created_on.minute) + ' ' + 'minutes ago'
 
         context = {
             'tasks':  async_result,
-            'time': time
         }
         return render(request, 'downloads.html', context)
 
