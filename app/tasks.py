@@ -3,12 +3,11 @@ import os
 import sys
 import random
 from mq.celery import app
-from celery import shared_task
 from .models import Employee, AsyncResults
 from django.http import HttpResponse
 from django.conf import settings
 
-@shared_task(bind=True)
+@app.task(bind=True)
 def createCSV(self, amount):
     columns = ['id', 'gender', 'education_level', 'relationship_status', 'growth_rate', 'unit', 'attrition_rate']
     employees = Employee.objects.all()[:int(amount)].values(*columns)
